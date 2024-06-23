@@ -1,27 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { Channel as ChannelType } from "stream-chat";
+
+import { useState } from "react";
+import { Channel, ChannelList, MessageInput, MessageList } from "stream-chat-expo";
+import { router } from "expo-router";
 
 export default function MainTabScreen() {
-  return (
-    <Text>Main tab</Text>
-  );
-}
+  const [channel, setChannel] = useState<ChannelType>();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+  if (channel) {
+    return <Channel channel={channel}>
+      <MessageList />
+      <MessageInput />
+    </Channel>;
+  }
+
+  return <ChannelList onSelect={(channel) => router.push('/channel')} />;
+}
