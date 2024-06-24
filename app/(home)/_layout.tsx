@@ -5,7 +5,7 @@ import { Redirect, Stack } from "expo-router";
 export default function HomeLayout() {
   const { user } = useAuth();
   if (!user) {
-    return <Redirect href="/(auth)" />;
+    return <Redirect href="/(auth)/login" />;
   }
   return (
     <ChatProvider>
