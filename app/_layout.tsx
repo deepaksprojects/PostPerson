@@ -5,13 +5,14 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import AuthProvider from "@/components/providers/authProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -56,10 +57,9 @@ function RootLayoutNav() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(home)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
+        <AuthProvider>
+          <Slot />
+        </AuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
