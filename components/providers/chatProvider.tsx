@@ -4,6 +4,7 @@ import { StreamChat } from "stream-chat";
 import { Chat, OverlayProvider } from "stream-chat-expo";
 import { useAuth } from "./authProvider";
 import { supabase } from "@/lib/supabase";
+import { TokenProvider } from "@/utils/tokenProvider";
 const client = StreamChat.getInstance(
   process.env.EXPO_PUBLIC_STREAM_API_KEY as string
 );
@@ -20,9 +21,11 @@ export default function ChatProvider({ children }: PropsWithChildren) {
         {
           id: profile.id,
           name: profile.full_name,
-          image: supabase.storage.from("avatars").getPublicUrl(profile.avatar_url)?.data?.publicUrl,
+          image: supabase.storage
+            .from("avatars")
+            .getPublicUrl(profile.avatar_url)?.data?.publicUrl,
         },
-        client.devToken(profile.id)
+        TokenProvider
       );
       setIsReady(true);
     };
